@@ -1,0 +1,151 @@
+﻿
+.leaveCells {
+    width: 30px;
+    height: 30px;
+    float: left;
+    border: 1px solid black;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    float: left;
+    background-color: lightgray;
+}
+
+.headerCells {
+    width: 30px;
+    height: 15px;
+    float: left;
+    border: 1px solid black;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    background-color: lightcoral;
+	horiz-align: center;
+}
+
+.headerCellsEmpty {
+    width: 90px;
+    height: 15px;
+    float: left;
+    border: 0 solid #000;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+}
+
+.employeeNameCells {
+    width: 90px;
+    height: 30px;
+    float: left;
+    border: 1px solid black;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    background-color: khaki;
+}
+
+.rowTotalCells {
+    width: 60px;
+    height: 30px;
+    float: left;
+    border: 1px solid black;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    background-color: khaki;
+}
+
+.headerCellsHoliday {
+    width: 30px;
+    height: 15px;
+    float: left;
+    border: 1px solid #808080;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    background-color: #5b5959;
+    color : white;
+	horiz-align: center;
+    
+}
+
+.headerCellsHolidayCurrentDate {
+    width: 30px;
+    height: 15px;
+    float: left;
+    border: 2px solid #808080;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    background-color: #5b5959;
+    color : white;
+	horiz-align: center;
+    
+}
+
+.headerCellsCurrentDate {
+    width: 30px;
+    height: 15px;
+    float: left;
+    border: 2px solid black;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    background-color: lightcoral;
+}
+
+.leaveCellsCurrentDate {
+     width: 30px;
+    height: 30px;
+    float: left;
+    border: 2px solid black;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    float: left;
+    background-color: lightgray;
+}
+
+
+
+
+.cellcol {
+    width: 199px;
+    height: 30px;
+    float: left;
+    border: 1px solid black;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    border-spacing: 2px;
+}
+
+.headerCellToday {
+    width: 30px;
+    height: 15px;
+    float: left;
+    border: 1px solid #d3dce0;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    background-color: lightblue;
+}
+
+.headerCellHoliday {
+    width: 30px;
+    height: 15px;
+    float: left;
+    border: 1px solid #808080;
+    margin: .5px;
+    font-size: .8em;
+    text-align: center;
+    background-color: #fff;
+}
+
+.dropdown {
+    display: block;
+}
+
+#LeaveMenu {
+    display: block;
+}

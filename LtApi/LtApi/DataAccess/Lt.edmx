@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LeaveTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeTypeId" Type="int" Nullable="false" />
+          <Property Name="JoinDate" Type="smalldatetime" />
+          <Property Name="ReleavedDate" Type="smalldatetime" />
+          <Property Name="Number" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="LeavesPerYear" Type="int" Nullable="false" />
+          <Property Name="UsedLeaves" Type="int" Nullable="false" />
+          <Property Name="AvailableLeaves" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeTypes">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Leaves">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="EndDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="LeaveTypeId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="ApprovedById" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LeaveTypes">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ApprovedBy_Leaves">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Leaves" Type="Self.Leaves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="ApprovedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Employee">
+          <End Role="EmployeeTypes" Type="Self.EmployeeTypes" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeTypes">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmployeeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Leaves">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Leaves" Type="Self.Leaves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LeaveTypes_Leaves">
+          <End Role="LeaveTypes" Type="Self.LeaveTypes" Multiplicity="1" />
+          <End Role="Leaves" Type="Self.Leaves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LeaveTypes">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="LeaveTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LeaveTrackerModelStoreContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeTypes" EntityType="Self.EmployeeTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leaves" EntityType="Self.Leaves" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LeaveTypes" EntityType="Self.LeaveTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ApprovedBy_Leaves" Association="Self.FK_ApprovedBy_Leaves">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Leaves" EntitySet="Leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Employee" Association="Self.FK_Employee_Employee">
+            <End Role="EmployeeTypes" EntitySet="EmployeeTypes" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Leaves" Association="Self.FK_Employee_Leaves">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Leaves" EntitySet="Leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LeaveTypes_Leaves" Association="Self.FK_LeaveTypes_Leaves">
+            <End Role="LeaveTypes" EntitySet="LeaveTypes" />
+            <End Role="Leaves" EntitySet="Leaves" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LeaveTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeTypeId" Type="Int32" Nullable="false" />
+          <Property Name="JoinDate" Type="DateTime" Precision="0" />
+          <Property Name="ReleavedDate" Type="DateTime" Precision="0" />
+          <Property Name="Number" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="LeavesPerYear" Type="Int32" Nullable="false" />
+          <Property Name="UsedLeaves" Type="Int32" Nullable="false" />
+          <Property Name="AvailableLeaves" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Leaves" Relationship="Self.FK_ApprovedBy_Leaves" FromRole="Employee" ToRole="Leaves" />
+          <NavigationProperty Name="EmployeeType" Relationship="Self.FK_Employee_Employee" FromRole="Employee" ToRole="EmployeeTypes" />
+          <NavigationProperty Name="Leaves1" Relationship="Self.FK_Employee_Leaves" FromRole="Employee" ToRole="Leaves" />
+        </EntityType>
+        <EntityType Name="EmployeeType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Employee" FromRole="EmployeeTypes" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Leaves">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LeaveTypeId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="ApprovedById" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_ApprovedBy_Leaves" FromRole="Leaves" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="Self.FK_Employee_Leaves" FromRole="Leaves" ToRole="Employee" />
+          <NavigationProperty Name="LeaveType" Relationship="Self.FK_LeaveTypes_Leaves" FromRole="Leaves" ToRole="LeaveTypes" />
+        </EntityType>
+        <EntityType Name="LeaveType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Leaves" Relationship="Self.FK_LeaveTypes_Leaves" FromRole="LeaveTypes" ToRole="Leaves" />
+        </EntityType>
+        <Association Name="FK_ApprovedBy_Leaves">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Leaves" Type="LeaveTrackerModel.Leaves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="ApprovedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Employee">
+          <End Role="EmployeeTypes" Type="Self.EmployeeType" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeTypes">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmployeeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Leaves">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Leaves" Type="LeaveTrackerModel.Leaves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LeaveTypes_Leaves">
+          <End Role="LeaveTypes" Type="Self.LeaveType" Multiplicity="1" />
+          <End Role="Leaves" Type="LeaveTrackerModel.Leaves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LeaveTypes">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="LeaveTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LeaveTrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeTypes" EntityType="Self.EmployeeType" />
+          <EntitySet Name="Leaves1" EntityType="LeaveTrackerModel.Leaves" />
+          <EntitySet Name="LeaveTypes" EntityType="Self.LeaveType" />
+          <AssociationSet Name="FK_ApprovedBy_Leaves" Association="Self.FK_ApprovedBy_Leaves">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Leaves" EntitySet="Leaves1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Employee" Association="Self.FK_Employee_Employee">
+            <End Role="EmployeeTypes" EntitySet="EmployeeTypes" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Leaves" Association="Self.FK_Employee_Leaves">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Leaves" EntitySet="Leaves1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LeaveTypes_Leaves" Association="Self.FK_LeaveTypes_Leaves">
+            <End Role="LeaveTypes" EntitySet="LeaveTypes" />
+            <End Role="Leaves" EntitySet="Leaves1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LeaveTrackerModelStoreContainer" CdmEntityContainer="LeaveTrackerEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="LeaveTrackerModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EmployeeTypeId" ColumnName="EmployeeTypeId" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="ReleavedDate" ColumnName="ReleavedDate" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="LeavesPerYear" ColumnName="LeavesPerYear" />
+                <ScalarProperty Name="UsedLeaves" ColumnName="UsedLeaves" />
+                <ScalarProperty Name="AvailableLeaves" ColumnName="AvailableLeaves" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeTypes">
+            <EntityTypeMapping TypeName="LeaveTrackerModel.EmployeeType">
+              <MappingFragment StoreEntitySet="EmployeeTypes">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leaves1">
+            <EntityTypeMapping TypeName="LeaveTrackerModel.Leaves">
+              <MappingFragment StoreEntitySet="Leaves">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="LeaveTypeId" ColumnName="LeaveTypeId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ApprovedById" ColumnName="ApprovedById" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LeaveTypes">
+            <EntityTypeMapping TypeName="LeaveTrackerModel.LeaveType">
+              <MappingFragment StoreEntitySet="LeaveTypes">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

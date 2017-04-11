@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<head>
+    <title></title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/Lt/LeaveTracker.js"></script>
+<link href="~/Content/Lt/LeaveTracker.css" rel="stylesheet" />
+
+Select Date:
+<input type="date" id="inputDate" /> 
+
+<table id="ltTable">
+
+    @{
+        const int rowLength = 13;
+        const int colLength = 32;
+        const string headerCellsClass = "headerCells";
+
+        for (var row = 0; row <= rowLength; row++)
+        {
+            <tr>
+                @for (var column = 0; column <= colLength; column++)
+                {
+                    string cellClass;
+                    string cellId;
+                    if (row <= 2 && (column == 0 || column == colLength)) // Date,Day Cells
+                    {
+                        cellClass = headerCellsClass + "Empty";
+                        cellId = "cell_" + row + "," + column;
+                    }
+                    else if (row <= 2) // Date,Day Cells
+                    {
+                        cellClass = headerCellsClass;
+                        cellId = "cell_" + row + "," + column;
+                    }
+                    else if (row > 2 && column == 0) // Employee name cells
+                    {
+                        cellClass = "employeeNameCells";
+                        cellId = "empName_" + row;
+                    }
+                    else if (row > 2 && column == colLength) // Total by employee cells
+                    {
+                        cellClass = "rowTotalCells";
+                        cellId = "rowTotal_" + row;
+                    }
+                    else  // Leave cells
+                    {
+                        cellClass = "leaveCells";
+                        cellId = "cell_" + row + "," + column;
+                    }
+
+                    <td id="@cellId" class="@cellClass"></td>
+                }
+
+            </tr>
+        }
+    }
+</table>
+
+@*<div class="Pages" id="pageId">
+        <a href="#" id="stratingPage" class="startingPageClass"><<</a>  <a href="#" id="firstPage" class="badge firstPageClass">0</a>  <a href="#" class="badge secondPageClass" id="secondPage">1</a>   <a href="#" id="thirdPage" class="badge thirdPageClass">2</a>   <a href="#" id="lastPage" class="lastPageClass">>></a>
+    </div>*@
+
